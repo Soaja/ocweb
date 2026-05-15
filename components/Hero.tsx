@@ -69,11 +69,17 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-[100dvh] min-h-[580px] flex flex-col overflow-hidden bg-navy-950">
+    /*
+     * h-[100svh] — "small viewport height": stabilan, ne menja se dok
+     * iOS Safari sakriva/prikazuje address bar (za razliku od dvh).
+     * Ovo eliminiše "rastezanje" sekcije pri skrolovanju.
+     */
+    <section className="relative h-[100svh] min-h-[580px] flex flex-col overflow-hidden bg-navy-950">
 
       {/* ── VIDEO ────────────────────────────────────────────── */}
       <video
         autoPlay muted loop playsInline
+        preload="none"                    /* ne blokira initial load */
         className="absolute inset-0 w-full h-full object-cover"
         style={{ filter: "brightness(0.38) saturate(0.6)" }}
       >
@@ -92,13 +98,13 @@ export default function Hero() {
             rgba(5,13,24,0.96) 100%)`,
         }}
       />
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center,transparent 45%,rgba(5,13,24,0.85) 100%)" }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at center,transparent 45%,rgba(5,13,24,0.85) 100%)" }}
+      />
 
-      {/* ── CONTENT — centered on all screen sizes ──────────── */}
-      <div className="relative z-10 flex-1 flex flex-col
-        justify-center items-center text-center
-        px-5 md:px-16">
+      {/* ── CONTENT — vertikalni centar na svim ekranima ─────── */}
+      <div className="relative z-10 flex-1 flex flex-col justify-center items-center text-center px-5 md:px-16">
 
         {/* Label */}
         <div ref={labelRef} className="flex items-center gap-3 mb-4 md:mb-7">
@@ -109,10 +115,10 @@ export default function Hero() {
           <span className="w-6 h-px bg-gold/50 hidden md:block" />
         </div>
 
-        {/* Headline — bigger on mobile, full width, text-balance */}
+        {/* Headline */}
         <h1
           ref={headlineRef}
-          className="font-cormorant font-bold text-cream text-balance w-full md:max-w-none"
+          className="font-cormorant font-bold text-cream text-balance w-full"
           style={{ fontSize: "clamp(52px,8vw,112px)", lineHeight: 1.06, letterSpacing: "-0.015em" }}
         >
           Your experiences deserve{" "}
@@ -133,14 +139,17 @@ export default function Hero() {
           We design and build for boutique travel brands that refuse to be ordinary.
         </p>
 
-        {/* CTAs — side by side on all sizes */}
+        {/* CTAs */}
         <div ref={ctasRef} className="flex flex-row items-center justify-center gap-3 md:gap-4 mb-7 md:mb-10">
-          <Link href="/contact" data-cursor="LET'S TALK"
+          <Link
+            href="/contact"
+            data-cursor="LET'S TALK"
             className="group inline-flex items-center justify-center gap-2 h-11 md:h-12 px-6 md:px-8
               bg-gold/10 border border-gold/55 rounded-[3px] font-inter text-[10px] md:text-[11px]
               tracking-[0.16em] md:tracking-[0.18em] text-gold uppercase hover:bg-gold hover:text-navy-900
-              hover:border-gold transition-all duration-300
-              ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-sm whitespace-nowrap">
+              hover:border-gold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+              backdrop-blur-sm whitespace-nowrap"
+          >
             Start a project
             <svg width="11" height="11" viewBox="0 0 13 13" fill="none"
               className="transition-transform duration-300 group-hover:translate-x-1 shrink-0">
@@ -148,12 +157,15 @@ export default function Hero() {
                 strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
-          <Link href="/work" data-cursor="EXPLORE"
+          <Link
+            href="/work"
+            data-cursor="EXPLORE"
             className="inline-flex items-center justify-center h-11 md:h-12 px-5 md:px-6
               rounded-[3px] font-inter text-[10px] md:text-[11px]
               tracking-[0.16em] md:tracking-[0.18em] text-cream/55 uppercase
               hover:text-cream/90 border border-white/[.15] hover:border-white/30
-              transition-all duration-300 backdrop-blur-sm whitespace-nowrap">
+              transition-all duration-300 backdrop-blur-sm whitespace-nowrap"
+          >
             View work
           </Link>
         </div>
