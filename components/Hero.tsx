@@ -95,10 +95,10 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse at center,transparent 45%,rgba(5,13,24,0.85) 100%)" }} />
 
-      {/* ── CONTENT — bottom on mobile, centered on desktop ──── */}
+      {/* ── CONTENT — centered on all screen sizes ──────────── */}
       <div className="relative z-10 flex-1 flex flex-col
-        justify-end md:justify-center items-center text-center
-        px-5 md:px-16 pb-8 md:pb-0">
+        justify-center items-center text-center
+        px-5 md:px-16">
 
         {/* Label */}
         <div ref={labelRef} className="flex items-center gap-3 mb-4 md:mb-7">
