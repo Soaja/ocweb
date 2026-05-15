@@ -99,19 +99,19 @@ export default function Hero() {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 md:px-16">
 
         {/* Label */}
-        <div ref={labelRef} className="flex items-center gap-3 mb-4 md:mb-7">
+        <div ref={labelRef} className="flex items-center gap-3 mb-3 md:mb-7">
           <span className="w-6 h-px bg-gold/50 hidden sm:block" />
-          <span className="font-mono text-[10px] tracking-[0.32em] text-gold/65 uppercase">
+          <span className="font-mono text-[9px] md:text-[10px] tracking-[0.32em] text-gold/65 uppercase">
             <span className="hidden sm:inline">Milan · Boutique Travel · </span>Digital Agency
           </span>
           <span className="w-6 h-px bg-gold/50 hidden sm:block" />
         </div>
 
-        {/* Headline — no hard <br>, text-balance handles wrapping */}
+        {/* Headline */}
         <h1
           ref={headlineRef}
-          className="font-cormorant font-bold text-cream text-balance max-w-[340px] sm:max-w-[600px] md:max-w-none"
-          style={{ fontSize: "clamp(36px,8vw,112px)", lineHeight: 1.06, letterSpacing: "-0.01em" }}
+          className="font-cormorant font-bold text-cream text-balance max-w-[300px] sm:max-w-[580px] md:max-w-none"
+          style={{ fontSize: "clamp(34px,8vw,112px)", lineHeight: 1.07, letterSpacing: "-0.01em" }}
         >
           Your experiences deserve{" "}
           <em className="not-italic" style={{
@@ -125,48 +125,48 @@ export default function Hero() {
         {/* Sub */}
         <p
           ref={subRef}
-          className="font-inter text-[13px] md:text-[16px] leading-[1.7] text-cream/48 max-w-[340px] md:max-w-[500px] mt-4 mb-7 md:mt-6 md:mb-9"
+          className="font-inter text-[12px] md:text-[16px] leading-[1.65] text-cream/48 max-w-[300px] md:max-w-[500px] mt-3 mb-5 md:mt-6 md:mb-9"
         >
-          We design and build for the boutique travel brands that refuse
-          to be ordinary — tour operators, hotels, independent agencies.
+          We build for boutique travel brands that refuse to be ordinary
+          <span className="hidden sm:inline"> — tour operators, hotels, independent agencies</span>.
         </p>
 
-        {/* CTAs */}
-        <div ref={ctasRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-7 md:mb-10 w-full max-w-[340px] sm:max-w-none">
+        {/* CTAs — always side by side, stack only on very narrow */}
+        <div ref={ctasRef} className="flex flex-row items-center justify-center gap-2 md:gap-4 mb-6 md:mb-10">
           <Link href="/contact" data-cursor="LET'S TALK"
-            className="group inline-flex items-center justify-center gap-3 h-12 w-full sm:w-auto px-8
-              bg-gold/10 border border-gold/55 rounded-[3px] font-inter text-[11px]
-              tracking-[0.18em] text-gold uppercase hover:bg-gold hover:text-navy-900
+            className="group inline-flex items-center justify-center gap-2 h-11 md:h-12 px-5 md:px-8
+              bg-gold/10 border border-gold/55 rounded-[3px] font-inter text-[10px] md:text-[11px]
+              tracking-[0.16em] text-gold uppercase hover:bg-gold hover:text-navy-900
               hover:border-gold transition-all duration-300
-              ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-sm">
+              ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-sm whitespace-nowrap">
             Start a project
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
-              className="transition-transform duration-300 group-hover:translate-x-1">
+            <svg width="11" height="11" viewBox="0 0 13 13" fill="none"
+              className="transition-transform duration-300 group-hover:translate-x-1 shrink-0">
               <path d="M2 6.5h9M8 3l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.3"
                 strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
           <Link href="/work" data-cursor="EXPLORE"
-            className="inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6
-              rounded-[3px] font-inter text-[11px] tracking-[0.18em] text-cream/50 uppercase
+            className="inline-flex items-center justify-center h-11 md:h-12 px-4 md:px-6
+              rounded-[3px] font-inter text-[10px] md:text-[11px] tracking-[0.16em] text-cream/50 uppercase
               hover:text-cream/85 border border-white/[.12] hover:border-white/28
-              transition-all duration-300 backdrop-blur-sm">
-            View our work
+              transition-all duration-300 backdrop-blur-sm whitespace-nowrap">
+            View work
           </Link>
         </div>
 
         {/* Stats */}
-        <div ref={statsRef} className="flex items-center gap-6 sm:gap-10 md:gap-14">
+        <div ref={statsRef} className="flex items-center gap-5 sm:gap-10 md:gap-14">
           {STATS.map((s, i) => (
             <div key={i} className="flex flex-col items-center gap-1">
               <span
                 ref={el => { statEls.current[i] = el; }}
                 className="font-mono font-medium text-gold leading-none tracking-tight"
-                style={{ fontSize: "clamp(20px,3vw,30px)" }}
+                style={{ fontSize: "clamp(18px,3vw,30px)" }}
               >
                 0{s.suffix}
               </span>
-              <span className="font-inter text-[9px] tracking-[0.18em] text-cream/35 uppercase">
+              <span className="font-inter text-[8px] md:text-[9px] tracking-[0.16em] text-cream/35 uppercase">
                 {s.label}
               </span>
             </div>
@@ -174,8 +174,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── SCROLL INDICATOR ─────────────────────────────────── */}
-      <div className="relative z-10 flex justify-center pb-6 md:pb-7">
+      {/* ── SCROLL INDICATOR — hidden on short screens ────────── */}
+      <div className="relative z-10 hidden sm:flex justify-center pb-6 md:pb-7">
         <div className="flex flex-col items-center gap-2 opacity-30">
           <span className="font-mono text-[8px] tracking-[0.35em] text-cream/60 uppercase">Scroll</span>
           <div className="w-px h-6 md:h-8 bg-gradient-to-b from-cream/50 to-transparent" />
