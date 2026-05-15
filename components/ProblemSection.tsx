@@ -88,7 +88,7 @@ export default function ProblemSection() {
       <div className="relative z-10 max-w-[1200px] mx-auto px-5 md:px-16">
 
         {/* ── Header ──────────────────────────────────────────── */}
-        <div className="prob-header mb-16 md:mb-20">
+        <div className="prob-header mb-10 md:mb-20">
           <div className="flex items-center gap-4 mb-7">
             <span className="font-mono text-[10px] tracking-[.38em] text-gold/50 uppercase">
               01 — The problem

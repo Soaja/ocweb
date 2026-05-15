@@ -70,7 +70,7 @@ export default function CaseStudiesSection() {
       <div className="max-w-[1200px] mx-auto px-5 md:px-16">
 
         {/* ── Header ─────────────────────────────────────────── */}
-        <div className="cs-header flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-20">
+        <div className="cs-header flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-20">
           <div>
             <div className="flex items-center gap-4 mb-6">
               <span className="font-mono text-[10px] tracking-[.38em] text-gold/50 uppercase">
@@ -111,13 +111,25 @@ export default function CaseStudiesSection() {
                 backgroundColor: hovered === i ? "rgba(201,168,76,0.025)" : "transparent",
               }}
             >
-              <Link href={c.href} data-cursor="VIEW" className="block py-8 md:py-10">
-                <div className="flex flex-col md:grid md:grid-cols-[80px_1fr_auto_auto] md:items-center gap-4 md:gap-8">
+              <Link href={c.href} data-cursor="VIEW" className="block py-7 md:py-10">
+                <div className="flex flex-col md:grid md:grid-cols-[80px_1fr_auto_auto] md:items-center gap-3 md:gap-8">
 
-                  {/* number */}
-                  <span className="font-mono text-[11px] tracking-[.3em] text-gold/35 uppercase">
-                    {c.num}
-                  </span>
+                  {/* Mobile top row: number + result side by side */}
+                  <div className="flex items-center justify-between md:contents">
+                    <span className="font-mono text-[11px] tracking-[.3em] text-gold/35 uppercase">
+                      {c.num}
+                    </span>
+                    {/* result — right side on mobile, separate col on desktop */}
+                    <div className="flex flex-col items-end md:items-end gap-0.5 shrink-0 md:min-w-[100px]">
+                      <span className="font-mono font-medium text-gold leading-none"
+                        style={{ fontSize: "clamp(24px,3.5vw,48px)" }}>
+                        {c.result}
+                      </span>
+                      <span className="font-mono text-[9px] tracking-[.2em] text-cream/25 uppercase">
+                        {c.resultLabel}
+                      </span>
+                    </div>
+                  </div>
 
                   {/* brand + meta + desc */}
                   <div className="flex flex-col gap-2">
@@ -131,10 +143,10 @@ export default function CaseStudiesSection() {
                         {c.location} · {c.category}
                       </span>
                     </div>
-                    {/* desc — visible on hover */}
+                    {/* desc — hover only */}
                     <p
                       className="font-inter text-[13px] leading-[1.65] text-cream/35
-                        transition-all duration-500 overflow-hidden"
+                        transition-all duration-500 overflow-hidden hidden md:block"
                       style={{
                         maxHeight: hovered === i ? "60px" : "0px",
                         opacity: hovered === i ? 1 : 0,
@@ -144,7 +156,7 @@ export default function CaseStudiesSection() {
                       {c.desc}
                     </p>
                     {/* tags */}
-                    <div className="flex flex-wrap gap-2 mt-1">
+                    <div className="flex flex-wrap gap-2 mt-0.5">
                       {c.tags.map(tag => (
                         <span key={tag}
                           className="font-inter text-[9px] tracking-[.15em] uppercase text-cream/20
@@ -155,8 +167,8 @@ export default function CaseStudiesSection() {
                     </div>
                   </div>
 
-                  {/* result */}
-                  <div className="flex flex-col items-start md:items-end gap-1 min-w-[100px]">
+                  {/* result — desktop only (already shown on mobile above) */}
+                  <div className="hidden md:flex flex-col items-end gap-1 min-w-[100px]">
                     <span className="font-mono font-medium text-gold leading-none"
                       style={{ fontSize: "clamp(30px,3.5vw,48px)" }}>
                       {c.result}

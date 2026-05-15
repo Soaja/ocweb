@@ -66,7 +66,7 @@ export default function MethodSection() {
       <div className="relative z-10 max-w-[1200px] mx-auto">
 
         {/* Header */}
-        <div ref={headRef} className="mb-20 md:mb-24">
+        <div ref={headRef} className="mb-10 md:mb-24">
           <div className="flex items-center gap-4 mb-8">
             <span className="font-mono text-[10px] tracking-[0.38em] text-gold/50 uppercase">02 — Our method</span>
           </div>
@@ -93,9 +93,8 @@ export default function MethodSection() {
                 One outcome.
               </em>
             </h2>
-            <p className="font-inter text-[14px] leading-[1.7] text-cream/40 max-w-[320px] md:text-right">
-              Everything we build is engineered around one metric:<br />
-              more qualified bookings for your brand.
+            <p className="font-inter text-[13px] md:text-[14px] leading-[1.7] text-cream/40 max-w-[320px] md:text-right">
+              Everything we build is engineered around one metric: more qualified bookings for your brand.
             </p>
           </div>
         </div>
@@ -105,7 +104,7 @@ export default function MethodSection() {
           {PILLARS.map((p, i) => (
             <div
               key={i}
-              className="pillar-card group relative bg-navy-950 p-8 md:p-10 flex flex-col gap-6 hover:bg-navy-900/60 transition-colors duration-500 overflow-hidden"
+              className="pillar-card group relative bg-navy-950 p-6 md:p-10 flex flex-col gap-4 md:gap-6 hover:bg-navy-900/60 transition-colors duration-500 overflow-hidden"
             >
               {/* Hover glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -115,7 +114,7 @@ export default function MethodSection() {
               {/* Number */}
               <span
                 className="font-cormorant font-bold text-gold/10 group-hover:text-gold/20 transition-colors duration-500 select-none leading-none"
-                style={{ fontSize: "clamp(64px, 8vw, 96px)" }}
+                style={{ fontSize: "clamp(44px, 8vw, 96px)" }}
               >
                 {p.num}
               </span>

@@ -12,16 +12,16 @@ const TICKER_ITEMS = [
 const VIDEO_SRC = "https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_25fps.mp4";
 
 const STATS = [
-  { target: 8.2,  decimals: 1, suffix: "%", label: "Avg. conversion rate" },
-  { target: 3,    decimals: 0, suffix: "×", label: "Direct bookings"      },
-  { target: 12,   decimals: 0, suffix: "+", label: "Travel brands"        },
+  { target: 8.2,  decimals: 1, suffix: "%", label: "Avg. conversion" },
+  { target: 3,    decimals: 0, suffix: "×", label: "Direct bookings"  },
+  { target: 12,   decimals: 0, suffix: "+", label: "Travel brands"    },
 ];
 
 function countUp(el: HTMLElement, to: number, decimals: number, suffix: string, duration = 1300) {
   const start = performance.now();
   const run = (now: number) => {
-    const t      = Math.min((now - start) / duration, 1);
-    const eased  = 1 - Math.pow(1 - t, 3);
+    const t     = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
     el.textContent = (eased * to).toFixed(decimals) + suffix;
     if (t < 1) requestAnimationFrame(run);
   };
@@ -45,77 +45,75 @@ export default function Hero() {
       gsap.set(
         [labelRef.current, headlineRef.current, subRef.current,
          ctasRef.current, statsRef.current, tickerRef.current],
-        { opacity: 0, y: 22 }
+        { opacity: 0, y: 18 }
       );
       gsap.set(overlayRef.current, { opacity: 0 });
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.to(overlayRef.current,   { opacity: 1,   duration: 1.2 },     0)
-        .to(labelRef.current,     { opacity: 1, y: 0, duration: 0.7 }, 0.6)
-        .to(headlineRef.current,  { opacity: 1, y: 0, duration: 0.9 }, 0.85)
-        .to(subRef.current,       { opacity: 1, y: 0, duration: 0.7 }, 1.15)
-        .to(ctasRef.current,      { opacity: 1, y: 0, duration: 0.6 }, 1.35)
-        .to(statsRef.current,     { opacity: 1, y: 0, duration: 0.6 }, 1.5)
+      tl.to(overlayRef.current,  { opacity: 1,   duration: 1.2 },     0)
+        .to(labelRef.current,    { opacity: 1, y: 0, duration: 0.7 }, 0.6)
+        .to(headlineRef.current, { opacity: 1, y: 0, duration: 0.9 }, 0.82)
+        .to(subRef.current,      { opacity: 1, y: 0, duration: 0.7 }, 1.1)
+        .to(ctasRef.current,     { opacity: 1, y: 0, duration: 0.6 }, 1.28)
+        .to(statsRef.current,    { opacity: 1, y: 0, duration: 0.6 }, 1.42)
         .add(() => {
           STATS.forEach((s, i) => {
             const el = statEls.current[i];
             if (el) countUp(el, s.target, s.decimals, s.suffix, 1400 + i * 120);
           });
-        }, 1.5)
-        .to(tickerRef.current,    { opacity: 1, y: 0, duration: 0.5 }, 1.65);
+        }, 1.42)
+        .to(tickerRef.current,   { opacity: 1, y: 0, duration: 0.5 }, 1.55);
     };
-
     init();
   }, []);
 
   return (
-    <section className="relative h-[100dvh] flex flex-col overflow-hidden bg-navy-950">
+    <section className="relative h-[100dvh] min-h-[580px] flex flex-col overflow-hidden bg-navy-950">
 
-      {/* ── VIDEO BACKGROUND ─────────────────────────────────── */}
+      {/* ── VIDEO ────────────────────────────────────────────── */}
       <video
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.42) saturate(0.65)" }}
+        style={{ filter: "brightness(0.38) saturate(0.6)" }}
       >
         <source src={VIDEO_SRC} type="video/mp4" />
       </video>
 
-      {/* ── GRADIENT OVERLAY ─────────────────────────────────── */}
+      {/* ── OVERLAYS ─────────────────────────────────────────── */}
       <div
         ref={overlayRef}
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `linear-gradient(to bottom,
-            rgba(10,22,40,0.80) 0%,
-            rgba(10,22,40,0.35) 35%,
-            rgba(10,22,40,0.35) 65%,
-            rgba(10,22,40,0.95) 100%)`,
+            rgba(5,13,24,0.82) 0%,
+            rgba(5,13,24,0.28) 38%,
+            rgba(5,13,24,0.28) 60%,
+            rgba(5,13,24,0.96) 100%)`,
         }}
       />
-      {/* edge vignette */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at center,transparent 48%,rgba(5,13,24,0.88) 100%)" }} />
+        style={{ background: "radial-gradient(ellipse at center,transparent 45%,rgba(5,13,24,0.85) 100%)" }} />
 
       {/* ── CENTRE CONTENT ───────────────────────────────────── */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 md:px-16">
 
         {/* Label */}
-        <div ref={labelRef} className="flex items-center gap-3 mb-7">
-          <span className="w-8 h-px bg-gold/60 hidden sm:block" />
-          <span className="font-mono text-[10px] tracking-[0.35em] text-gold/65 uppercase">
+        <div ref={labelRef} className="flex items-center gap-3 mb-4 md:mb-7">
+          <span className="w-6 h-px bg-gold/50 hidden sm:block" />
+          <span className="font-mono text-[10px] tracking-[0.32em] text-gold/65 uppercase">
             <span className="hidden sm:inline">Milan · Boutique Travel · </span>Digital Agency
           </span>
-          <span className="w-8 h-px bg-gold/60 hidden sm:block" />
+          <span className="w-6 h-px bg-gold/50 hidden sm:block" />
         </div>
 
-        {/* Headline */}
+        {/* Headline — no hard <br>, text-balance handles wrapping */}
         <h1
           ref={headlineRef}
-          className="font-cormorant font-bold text-cream text-balance"
-          style={{ fontSize: "clamp(52px,7.5vw,112px)", lineHeight: 1.04, letterSpacing: "-0.01em" }}
+          className="font-cormorant font-bold text-cream text-balance max-w-[340px] sm:max-w-[600px] md:max-w-none"
+          style={{ fontSize: "clamp(36px,8vw,112px)", lineHeight: 1.06, letterSpacing: "-0.01em" }}
         >
-          Your experiences deserve<br />
+          Your experiences deserve{" "}
           <em className="not-italic" style={{
             background: "linear-gradient(135deg,#C9A84C 0%,#E8C96A 45%,#C9A84C 100%)",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
@@ -127,17 +125,17 @@ export default function Hero() {
         {/* Sub */}
         <p
           ref={subRef}
-          className="font-inter text-[15px] md:text-[17px] leading-[1.7] text-cream/50 max-w-[520px] mt-6 mb-9"
+          className="font-inter text-[13px] md:text-[16px] leading-[1.7] text-cream/48 max-w-[340px] md:max-w-[500px] mt-4 mb-7 md:mt-6 md:mb-9"
         >
           We design and build for the boutique travel brands that refuse
           to be ordinary — tour operators, hotels, independent agencies.
         </p>
 
         {/* CTAs */}
-        <div ref={ctasRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-10 w-full px-4 sm:px-0">
+        <div ref={ctasRef} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-7 md:mb-10 w-full max-w-[340px] sm:max-w-none">
           <Link href="/contact" data-cursor="LET'S TALK"
             className="group inline-flex items-center justify-center gap-3 h-12 w-full sm:w-auto px-8
-              bg-gold/10 border border-gold/60 rounded-[3px] font-inter text-[11px]
+              bg-gold/10 border border-gold/55 rounded-[3px] font-inter text-[11px]
               tracking-[0.18em] text-gold uppercase hover:bg-gold hover:text-navy-900
               hover:border-gold transition-all duration-300
               ease-[cubic-bezier(0.16,1,0.3,1)] backdrop-blur-sm">
@@ -151,23 +149,24 @@ export default function Hero() {
           <Link href="/work" data-cursor="EXPLORE"
             className="inline-flex items-center justify-center gap-2 h-12 w-full sm:w-auto px-6
               rounded-[3px] font-inter text-[11px] tracking-[0.18em] text-cream/50 uppercase
-              hover:text-cream/85 border border-white/10 hover:border-white/28
+              hover:text-cream/85 border border-white/[.12] hover:border-white/28
               transition-all duration-300 backdrop-blur-sm">
             View our work
           </Link>
         </div>
 
-        {/* Stats — counter-animated */}
-        <div ref={statsRef} className="flex items-center gap-6 sm:gap-8 md:gap-12">
+        {/* Stats */}
+        <div ref={statsRef} className="flex items-center gap-6 sm:gap-10 md:gap-14">
           {STATS.map((s, i) => (
-            <div key={i} className="flex flex-col items-center">
+            <div key={i} className="flex flex-col items-center gap-1">
               <span
                 ref={el => { statEls.current[i] = el; }}
-                className="font-mono text-[26px] md:text-[30px] text-gold font-medium leading-none tracking-tight"
+                className="font-mono font-medium text-gold leading-none tracking-tight"
+                style={{ fontSize: "clamp(20px,3vw,30px)" }}
               >
                 0{s.suffix}
               </span>
-              <span className="font-inter text-[9px] tracking-[0.2em] text-cream/38 uppercase mt-1.5">
+              <span className="font-inter text-[9px] tracking-[0.18em] text-cream/35 uppercase">
                 {s.label}
               </span>
             </div>
@@ -176,22 +175,22 @@ export default function Hero() {
       </div>
 
       {/* ── SCROLL INDICATOR ─────────────────────────────────── */}
-      <div className="relative z-10 flex justify-center pb-7">
-        <div className="flex flex-col items-center gap-2 opacity-35">
+      <div className="relative z-10 flex justify-center pb-6 md:pb-7">
+        <div className="flex flex-col items-center gap-2 opacity-30">
           <span className="font-mono text-[8px] tracking-[0.35em] text-cream/60 uppercase">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-cream/50 to-transparent" />
+          <div className="w-px h-6 md:h-8 bg-gradient-to-b from-cream/50 to-transparent" />
         </div>
       </div>
 
       {/* ── TICKER ───────────────────────────────────────────── */}
       <div ref={tickerRef}
         className="relative z-10 border-t border-white/[0.07] overflow-hidden shrink-0">
-        <div className="absolute left-0 inset-y-0 w-14 z-10 bg-gradient-to-r from-navy-950/80 to-transparent pointer-events-none" />
-        <div className="absolute right-0 inset-y-0 w-14 z-10 bg-gradient-to-l from-navy-950/80 to-transparent pointer-events-none" />
+        <div className="absolute left-0 inset-y-0 w-10 z-10 bg-gradient-to-r from-navy-950/80 to-transparent pointer-events-none" />
+        <div className="absolute right-0 inset-y-0 w-10 z-10 bg-gradient-to-l from-navy-950/80 to-transparent pointer-events-none" />
         <div className="flex animate-ticker whitespace-nowrap py-3 w-max">
           {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
             <span key={i} className="inline-flex items-center">
-              <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-cream/18 px-5">
+              <span className="font-inter text-[10px] tracking-[0.22em] uppercase text-cream/18 px-4 md:px-5">
                 {item}
               </span>
               <span className="text-gold/25 text-[7px]">◆</span>
