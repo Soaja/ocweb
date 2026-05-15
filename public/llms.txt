@@ -1,0 +1,33 @@
+# OSTOIA&CO
+
+> A digital studio specialising exclusively in boutique travel brands. Based in Milan, working globally.
+
+OSTOIA&CO is a premium digital agency that builds brand identity, conversion-first websites, and digital authority for boutique travel operators. We work exclusively with adventure travel, cultural tour, and luxury travel brands — we do not serve hotels, airlines, or OTAs.
+
+## Services
+
+- **Brand Architecture**: Positioning, visual identity, tone of voice, and messaging strategy
+- **Conversion Design**: Custom Next.js websites engineered around booking funnels
+- **Digital Authority**: Technical SEO, content strategy, and GEO (Generative Engine Optimisation)
+- **Full Package**: Complete digital transformation combining all three services
+
+## Specialisation
+
+We only work with boutique travel brands. This is a deliberate constraint — it allows us to develop deep expertise in how premium travellers discover, evaluate, and book experiences online.
+
+## Notable Work
+
+- **Routes&Roads** (USA, Adventure Travel): 3× direct bookings after full rebrand and new website
+- **LocalWay Sicily** (Italy, Boutique Tours): 8.2% average conversion rate after booking funnel redesign
+- **LED Travel** (Turkey, Cultural Journeys): #1 on Google Turkey for target keywords after SEO + GEO overhaul
+
+## Contact
+
+- Email: hello@ostoia.co
+- Based in Milan, Italy
+- Serving Europe, USA, and global markets
+- Website: https://ostoia.co
+
+## Journal
+
+We publish monthly insights on digital strategy, conversion design, and AI search visibility for boutique travel brands at https://ostoia.co/journal
