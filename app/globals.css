@@ -21,9 +21,11 @@
     cursor: none;
   }
 
-  /* Hide cursor on touch devices */
+  /* Hide custom cursor on touch/mobile devices */
   @media (hover: none) {
     body { cursor: auto; }
+    .cursor-dot,
+    .cursor-follower { display: none !important; }
   }
 
   ::selection {

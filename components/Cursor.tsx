@@ -79,7 +79,7 @@ export default function Cursor() {
       {/* Gold dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none"
+        className="cursor-dot fixed top-0 left-0 z-[9999] pointer-events-none"
         style={{
           width: 7,
           height: 7,
@@ -94,7 +94,7 @@ export default function Cursor() {
       {/* Follower ring */}
       <div
         ref={followerRef}
-        className="fixed top-0 left-0 z-[9998] pointer-events-none flex items-center justify-center"
+        className="cursor-follower fixed top-0 left-0 z-[9998] pointer-events-none flex items-center justify-center"
         style={{
           width: 36,
           height: 36,
