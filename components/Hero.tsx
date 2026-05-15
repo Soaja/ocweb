@@ -113,7 +113,7 @@ export default function Hero() {
         <h1
           ref={headlineRef}
           className="font-cormorant font-bold text-cream text-balance w-full md:max-w-none"
-          style={{ fontSize: "clamp(44px,8vw,112px)", lineHeight: 1.06, letterSpacing: "-0.015em" }}
+          style={{ fontSize: "clamp(52px,8vw,112px)", lineHeight: 1.06, letterSpacing: "-0.015em" }}
         >
           Your experiences deserve{" "}
           <em className="not-italic" style={{
