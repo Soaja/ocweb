@@ -13,28 +13,47 @@ export default function ExitIntentPopup() {
   useEffect(() => {
     if (sessionStorage.getItem("oi_exit_dismissed")) return;
 
-    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    // Fire when user scrolls past the 3rd section:
+    // watch the 4th <section> — when it enters the viewport the user
+    // has already scrolled through sections 1, 2 and 3.
+    const findTarget = (): Element | null => {
+      const sections = document.querySelectorAll("main section");
+      return sections[3] ?? sections[sections.length - 1] ?? null;
+    };
 
-    if (!isTouch) {
-      // Desktop — fire when cursor exits viewport from top
-      const onLeave = (e: MouseEvent) => {
-        if (e.clientY <= 8 && !fired.current) {
-          fired.current = true;
-          trigger();
-        }
-      };
-      document.addEventListener("mouseleave", onLeave);
-      return () => document.removeEventListener("mouseleave", onLeave);
-    } else {
-      // Mobile — fire after 50 seconds
-      const t = setTimeout(() => {
-        if (!fired.current) { fired.current = true; trigger(); }
-      }, 50_000);
-      return () => clearTimeout(t);
-    }
+    // DOM might not have all sections on first paint — retry once
+    let target = findTarget();
+    const retryTimer = target
+      ? null
+      : setTimeout(() => { target = findTarget(); attach(); }, 500);
+
+    let io: IntersectionObserver | null = null;
+
+    const attach = () => {
+      if (!target) return;
+      io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !fired.current) {
+            fired.current = true;
+            io?.disconnect();
+            // Small delay so it doesn't feel too abrupt
+            setTimeout(show, 600);
+          }
+        },
+        { threshold: 0.12 }
+      );
+      io.observe(target);
+    };
+
+    attach();
+
+    return () => {
+      io?.disconnect();
+      if (retryTimer) clearTimeout(retryTimer);
+    };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const trigger = () => {
+  const show = () => {
     setVisible(true);
     requestAnimationFrame(() =>
       requestAnimationFrame(() => setEntered(true))
