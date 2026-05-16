@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -110,6 +111,7 @@ export default function RootLayout({
       <body className="antialiased">
         <SmoothScroll>
           <Cursor />
+          <ExitIntentPopup />
           {children}
         </SmoothScroll>
       </body>
