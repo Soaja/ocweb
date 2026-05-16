@@ -291,7 +291,7 @@ function WorkCta() {
       <div className="absolute inset-x-0 bottom-0 overflow-hidden select-none pointer-events-none flex justify-center">
         <span className="font-cormorant font-bold text-white/[.022] whitespace-nowrap"
           style={{ fontSize: "clamp(60px,15vw,200px)", letterSpacing: "-.02em", transform: "translateY(28%)" }}>
-          YOUR BRAND
+          LET&apos;S BUILD
         </span>
       </div>
 
