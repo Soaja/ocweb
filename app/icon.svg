@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Navy background -->
+  <rect width="32" height="32" rx="4" fill="#0A1628"/>
+  <!-- O lettermark in gold -->
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle"
+        font-family="Georgia, serif" font-weight="700" font-size="20"
+        fill="#C9A84C" letter-spacing="-0.5">O</text>
+  <!-- Gold underline accent -->
+  <rect x="10" y="25" width="12" height="1.5" rx="0.75" fill="#C9A84C" opacity="0.6"/>
+</svg>

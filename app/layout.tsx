@@ -43,7 +43,20 @@ export const metadata: Metadata = {
       "Your experiences deserve a digital presence that matches. We build for the travel brands that refuse to be ordinary.",
     type: "website",
     locale: "en_US",
+    url: "https://ostoia.co",
+    siteName: "OSTOIA&CO",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "OSTOIA&CO — Premium Digital Agency for Boutique Travel Brands",
+    description:
+      "Your experiences deserve a digital presence that matches. We build for the travel brands that refuse to be ordinary.",
+  },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/favicon.ico",
+  },
+  metadataBase: new URL("https://ostoia.co"),
 };
 
 const jsonLd = {
