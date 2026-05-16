@@ -59,9 +59,24 @@ export default function ContactContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState("sending");
-    /* ── Replace with your email service (Resend, Formspree, EmailJS) ── */
-    await new Promise((r) => setTimeout(r, 1800));
-    setFormState("success");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          company: form.company,
+          email: form.email,
+          message: form.message,
+          services: selectedServices,
+          budget,
+        }),
+      });
+      if (!res.ok) throw new Error("Server error");
+      setFormState("success");
+    } catch {
+      setFormState("error");
+    }
   };
 
   return (
@@ -298,8 +313,17 @@ export default function ContactContent() {
                     </span>
                   </button>
 
+                  {formState === "error" && (
+                    <p className="font-inter text-[13px] text-red-400/80 leading-[1.6]">
+                      Something went wrong — please try again or email us directly at{" "}
+                      <a href="mailto:hello@ostoia.co" className="text-gold underline underline-offset-2">
+                        hello@ostoia.co
+                      </a>
+                    </p>
+                  )}
+
                   <p className="font-mono text-[9px] tracking-[.2em] text-cream/18 uppercase">
-                    We respond within 48 hours · No spam, ever.
+                    We respond within one business day · No spam, ever.
                   </p>
                 </form>
               )}
