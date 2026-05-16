@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
     // Send notification to OSTOIA inbox
     await resend.emails.send({
-      from: "OSTOIA&CO Contact <contact@ostoia.co>",
+      from: "OSTOIA&CO Contact <onboarding@resend.dev>",   // zameni sa contact@ostoia.co kad verifikujes domen
       to: ["ostojich.vojin@gmail.com"],
       replyTo: email,
       subject: `New inquiry from ${name}${company ? ` — ${company}` : ""}`,
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 
     // Send auto-reply to prospect
     await resend.emails.send({
-      from: "OSTOIA&CO <hello@ostoia.co>",
+      from: "OSTOIA&CO <onboarding@resend.dev>",   // zameni sa hello@ostoia.co kad verifikujes domen
       to: [email],
       subject: "We received your inquiry — OSTOIA&CO",
       html: `
