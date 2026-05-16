@@ -560,7 +560,8 @@ function FaqSection({
   open: number | null;
   toggle: (i: number) => void;
 }) {
-  const ref = useRef<HTMLElement>(null);
+  const ref     = useRef<HTMLElement>(null);
+  const active  = open ?? 0;            // default first open on desktop
 
   useEffect(() => {
     const el = ref.current;
@@ -573,75 +574,196 @@ function FaqSection({
       gsap.from(".svc-faq-header > *", {
         opacity: 0, y: 24, stagger: 0.09, duration: 0.8, ease: "power3.out",
       });
-      gsap.from(".svc-faq-row", {
-        opacity: 0, y: 18, stagger: 0.08, duration: 0.65, ease: "power3.out", delay: 0.3,
+      gsap.from(".svc-faq-q", {
+        opacity: 0, x: -16, stagger: 0.07, duration: 0.65, ease: "power3.out", delay: 0.3,
       });
-    }, { threshold: 0.1 });
+      gsap.from(".svc-faq-answer-panel", {
+        opacity: 0, y: 16, duration: 0.7, ease: "power3.out", delay: 0.55,
+      });
+    }, { threshold: 0.08 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="relative bg-navy-950 py-16 md:py-32 px-5 md:px-16">
-      <div className="absolute top-0 inset-x-0 h-px"
-        style={{ background: "linear-gradient(to right,transparent,rgba(201,168,76,.1),transparent)" }} />
+    <section ref={ref} className="relative bg-navy-900 py-16 md:py-32 px-5 md:px-16 overflow-hidden">
+      {/* top accent */}
+      <div className="absolute top-0 inset-x-0 h-px pointer-events-none"
+        style={{ background: "linear-gradient(to right,transparent,rgba(201,168,76,.12),transparent)" }} />
+      {/* subtle radial */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 60% 50% at 100% 100%,rgba(201,168,76,.03) 0%,transparent 70%)" }} />
 
       <div className="max-w-[1200px] mx-auto">
-        <div className="svc-faq-header mb-14 md:mb-18">
-          <div className="flex items-center gap-4 mb-7">
-            <span className="font-mono text-[10px] tracking-[.38em] text-gold/50 uppercase">
-              Common questions
-            </span>
+
+        {/* ── Header ─────────────────────────────────────────── */}
+        <div className="svc-faq-header flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-20">
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-5 h-px bg-gold/40" />
+              <span className="font-mono text-[10px] tracking-[.38em] text-gold/50 uppercase">
+                Common questions
+              </span>
+            </div>
+            <h2 className="font-cormorant font-bold text-cream text-balance"
+              style={{ fontSize: "clamp(34px,4.5vw,64px)", lineHeight: 1.08, letterSpacing: "-.01em" }}>
+              Everything you need<br className="hidden md:block" /> to{" "}
+              <em className="not-italic" style={{
+                background: "linear-gradient(135deg,#C9A84C 0%,#E8C96A 50%,#C9A84C 100%)",
+                WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+              }}>know.</em>
+            </h2>
           </div>
-          <h2 className="font-cormorant font-bold text-cream"
-            style={{ fontSize: "clamp(32px,4.5vw,64px)", lineHeight: 1.08, letterSpacing: "-.01em" }}>
-            Everything you need<br className="hidden md:block" /> to know.
-          </h2>
+          <p className="font-inter text-[13px] leading-[1.7] text-cream/35 max-w-[260px] hidden md:block">
+            Can&apos;t find your answer? Write to us — we respond within one business day.
+          </p>
         </div>
 
-        <div className="flex flex-col border-t border-white/[.07]">
+        {/* ── Desktop: 2-column ──────────────────────────────── */}
+        <div className="hidden md:grid md:grid-cols-[1fr_1fr] gap-0 border border-white/[.06] rounded-[4px] overflow-hidden">
+
+          {/* Left — question list */}
+          <div className="border-r border-white/[.06]">
+            {faqs.map((faq, i) => {
+              const isActive = active === i;
+              return (
+                <button
+                  key={i}
+                  onClick={() => toggle(i)}
+                  className="svc-faq-q w-full text-left relative group transition-colors duration-300"
+                  style={{ backgroundColor: isActive ? "rgba(201,168,76,0.04)" : "transparent" }}
+                  aria-expanded={isActive}
+                >
+                  {/* gold left bar */}
+                  <div className="absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-400 rounded-r-full"
+                    style={{
+                      background: "linear-gradient(to bottom,#C9A84C,#E8C96A)",
+                      opacity: isActive ? 1 : 0,
+                      transform: isActive ? "scaleY(1)" : "scaleY(0.3)",
+                    }} />
+
+                  <div className="flex items-start gap-5 px-8 py-7 border-b border-white/[.06] last:border-b-0">
+                    <span className="font-mono text-[10px] tracking-[.28em] shrink-0 pt-1 transition-colors duration-300"
+                      style={{ color: isActive ? "#C9A84C" : "rgba(201,168,76,0.3)" }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-inter text-[14px] leading-[1.55] font-medium transition-colors duration-300 text-left"
+                      style={{ color: isActive ? "#F5F0E8" : "rgba(245,240,232,0.55)" }}>
+                      {faq.q}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right — answer panel */}
+          <div className="svc-faq-answer-panel relative flex flex-col justify-center min-h-[420px] p-10 bg-navy-950/40">
+            {/* big decorative quote */}
+            <div className="absolute top-8 right-10 font-cormorant text-[120px] leading-none text-gold/[.04] select-none pointer-events-none"
+              aria-hidden>
+              &ldquo;
+            </div>
+
+            <div key={active} className="relative">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="font-mono text-[9px] tracking-[.32em] text-gold/45 uppercase">
+                  {String(active + 1).padStart(2, "0")} — Answer
+                </span>
+                <div className="flex-1 h-px bg-gold/10" />
+              </div>
+
+              <p className="font-inter text-[15px] md:text-[16px] leading-[1.8] text-cream/70 mb-8">
+                {faqs[active].a}
+              </p>
+
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 font-mono text-[10px] tracking-[.24em]
+                  text-gold/50 uppercase hover:text-gold transition-colors duration-300 group"
+              >
+                Still have questions? Talk to us
+                <svg width="14" height="6" viewBox="0 0 14 6" fill="none"
+                  className="transition-transform duration-300 group-hover:translate-x-1">
+                  <path d="M0 3h12M9 1l3 2-3 2" stroke="currentColor" strokeWidth="1.1"
+                    strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Mobile: premium accordion ──────────────────────── */}
+        <div className="md:hidden flex flex-col">
           {faqs.map((faq, i) => {
             const isOpen = open === i;
             return (
-              <div key={i} className="svc-faq-row border-b border-white/[.07]">
+              <div key={i}
+                className="svc-faq-q relative border-b border-white/[.07] transition-colors duration-300"
+                style={{ backgroundColor: isOpen ? "rgba(201,168,76,0.03)" : "transparent" }}
+              >
+                {/* gold left bar */}
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] rounded-r-full transition-all duration-400"
+                  style={{
+                    background: "linear-gradient(to bottom,#C9A84C,#E8C96A)",
+                    opacity: isOpen ? 1 : 0,
+                    transform: isOpen ? "scaleY(1)" : "scaleY(0.3)",
+                  }} />
+
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full text-left py-6 flex items-start justify-between gap-6
-                    group transition-colors duration-200"
+                  className="w-full text-left py-5 px-4 flex items-start justify-between gap-4"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-inter text-[14px] md:text-[15px] leading-[1.6] font-medium
-                    transition-colors duration-200"
-                    style={{ color: isOpen ? "#F5F0E8" : "rgba(245,240,232,0.75)" }}>
-                    {faq.q}
-                  </span>
-                  <div className="w-7 h-7 rounded-full border flex items-center justify-center
-                    shrink-0 mt-0.5 transition-all duration-300"
+                  <div className="flex items-start gap-3 flex-1 min-w-0">
+                    <span className="font-mono text-[9px] tracking-[.28em] text-gold/40 shrink-0 pt-1">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-inter text-[14px] leading-[1.55] font-medium transition-colors duration-200"
+                      style={{ color: isOpen ? "#F5F0E8" : "rgba(245,240,232,0.72)" }}>
+                      {faq.q}
+                    </span>
+                  </div>
+                  {/* +/– icon — easier to read than chevron on mobile */}
+                  <div className="w-8 h-8 rounded-full border shrink-0 flex items-center justify-center transition-all duration-300"
                     style={{
-                      borderColor: isOpen ? "rgba(201,168,76,0.4)" : "rgba(245,240,232,0.08)",
+                      borderColor: isOpen ? "rgba(201,168,76,0.35)" : "rgba(245,240,232,0.08)",
                       background: isOpen ? "rgba(201,168,76,0.06)" : "transparent",
                     }}>
-                    <svg width="9" height="9" viewBox="0 0 9 9" fill="none"
-                      style={{
-                        color: isOpen ? "#C9A84C" : "rgba(245,240,232,0.25)",
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                        transition: "transform 0.35s cubic-bezier(.16,1,.3,1), color 0.3s",
-                      }}>
-                      <path d="M1 2.5l3.5 4 3.5-4" stroke="currentColor" strokeWidth="1.2"
-                        strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                      style={{ color: isOpen ? "#C9A84C" : "rgba(245,240,232,0.25)" }}>
+                      <path d="M5 1v8M1 5h8" stroke="currentColor" strokeWidth="1.3"
+                        strokeLinecap="round"
+                        style={{
+                          transformOrigin: "center",
+                          transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                          transition: "transform 0.35s cubic-bezier(.16,1,.3,1)",
+                        }} />
                     </svg>
                   </div>
                 </button>
-                <div className="overflow-hidden transition-all duration-450 ease-[cubic-bezier(.16,1,.3,1)]"
-                  style={{ maxHeight: isOpen ? "600px" : "0px", opacity: isOpen ? 1 : 0 }}>
-                  <p className="font-inter text-[13px] md:text-[14px] leading-[1.75] text-cream/40 pb-6 max-w-[680px]">
+
+                <div className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]"
+                  style={{ maxHeight: isOpen ? "400px" : "0px", opacity: isOpen ? 1 : 0 }}>
+                  <p className="font-inter text-[13px] leading-[1.75] text-cream/55 px-4 pb-5 pl-10">
                     {faq.a}
                   </p>
                 </div>
               </div>
             );
           })}
+
+          {/* mobile CTA after FAQ */}
+          <div className="flex items-center gap-3 mt-8">
+            <div className="w-6 h-px bg-gold/25" />
+            <Link href="/contact"
+              className="font-mono text-[9px] tracking-[.28em] text-gold/40 uppercase
+                hover:text-gold/70 transition-colors duration-300">
+              More questions? Talk to us →
+            </Link>
+          </div>
         </div>
+
       </div>
     </section>
   );
