@@ -4,6 +4,8 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import Cursor from "@/components/Cursor";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
+import CookieBanner from "@/components/CookieBanner";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -112,6 +114,8 @@ export default function RootLayout({
         <SmoothScroll>
           <Cursor />
           <ExitIntentPopup />
+          <CookieBanner />
+          <WhatsAppButton />
           {children}
         </SmoothScroll>
       </body>
