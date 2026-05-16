@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 // ── Update this to your WhatsApp number (international format, no + or spaces)
-const WA_NUMBER = "393XXXXXXXXX"; // e.g. 393491234567 for Italy +39 349 123 4567
+const WA_NUMBER = "38166437006";
 const WA_MESSAGE = encodeURIComponent("Hi, I'd like to learn more about your services for boutique travel brands.");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
