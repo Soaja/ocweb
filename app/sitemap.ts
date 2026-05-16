@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/work/routes-roads`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/work/localway-sicily`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/work/led-travel`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/invest`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/journal`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
