@@ -1,57 +1,68 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useCalendly } from "@/hooks/useCalendly";
 
 export default function ExitIntentPopup() {
   const [visible, setVisible]  = useState(false);
-  const [entered, setEntered]  = useState(false); // animate in
-  const [leaving, setLeaving]  = useState(false); // animate out
-  const fired = useRef(false);
+  const [entered, setEntered]  = useState(false);
+  const [leaving, setLeaving]  = useState(false);
+  const fired    = useRef(false);
+  const pathname = usePathname();
   const { open, loading } = useCalendly();
 
   useEffect(() => {
+    // Reset per navigation so each page gets its own trigger
+    fired.current = false;
+
     if (sessionStorage.getItem("oi_exit_dismissed")) return;
 
-    // Fire when user scrolls past the 3rd section:
-    // watch the 4th <section> — when it enters the viewport the user
-    // has already scrolled through sections 1, 2 and 3.
-    const findTarget = (): Element | null => {
-      const sections = document.querySelectorAll("main section");
-      return sections[3] ?? sections[sections.length - 1] ?? null;
-    };
-
-    // DOM might not have all sections on first paint — retry once
-    let target = findTarget();
-    const retryTimer = target
-      ? null
-      : setTimeout(() => { target = findTarget(); attach(); }, 500);
-
+    const isHome = pathname === "/";
     let io: IntersectionObserver | null = null;
+    let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const attach = () => {
-      if (!target) return;
-      io = new IntersectionObserver(
-        ([entry]) => {
+    if (isHome) {
+      // Homepage — scroll-based: fire when 4th section enters viewport
+      // (user has scrolled through 3 full sections)
+      const findTarget = (): Element | null => {
+        const sections = document.querySelectorAll("main section");
+        return sections[3] ?? sections[sections.length - 1] ?? null;
+      };
+
+      const attach = (target: Element) => {
+        io = new IntersectionObserver(([entry]) => {
           if (entry.isIntersecting && !fired.current) {
             fired.current = true;
             io?.disconnect();
-            // Small delay so it doesn't feel too abrupt
             setTimeout(show, 600);
           }
-        },
-        { threshold: 0.12 }
-      );
-      io.observe(target);
-    };
+        }, { threshold: 0.12 });
+        io.observe(target);
+      };
 
-    attach();
+      const target = findTarget();
+      if (target) {
+        attach(target);
+      } else {
+        // DOM not ready — retry once after paint
+        timer = setTimeout(() => {
+          const t = findTarget();
+          if (t) attach(t);
+        }, 600);
+      }
+    } else {
+      // All other pages — time-based: fire after 25 seconds on page
+      timer = setTimeout(() => {
+        if (!fired.current) { fired.current = true; show(); }
+      }, 25_000);
+    }
 
     return () => {
       io?.disconnect();
-      if (retryTimer) clearTimeout(retryTimer);
+      if (timer) clearTimeout(timer);
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pathname]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const show = () => {
     setVisible(true);
