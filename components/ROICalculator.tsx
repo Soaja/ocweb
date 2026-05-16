@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-
-const CALENDLY_URL = "https://calendly.com/ostoia-co/audit";
+import { useCalendly } from "@/hooks/useCalendly";
 
 function fmt(n: number) {
   return n >= 1_000_000
@@ -37,6 +36,8 @@ export default function ROICalculator() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
+
+  const { open, loading: calendlyLoading } = useCalendly();
 
   // Target CVR is OSTOIA's benchmark
   const TARGET_CVR = 3.8;
@@ -184,17 +185,18 @@ export default function ROICalculator() {
               </button>
             ) : (
               <div className="flex flex-col gap-3">
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 h-11 px-6
+                <button
+                  onClick={open}
+                  disabled={calendlyLoading}
+                  className="group inline-flex items-center justify-center gap-2 h-11 px-6 w-full
                     bg-gold/10 border border-gold/55 rounded-[3px] font-inter text-[11px]
                     tracking-[.16em] text-gold uppercase hover:bg-gold hover:text-navy-900
-                    hover:border-gold transition-all duration-300"
+                    hover:border-gold transition-all duration-300 disabled:opacity-60"
                 >
-                  Book a free 15-min audit call
-                </a>
+                  {calendlyLoading ? (
+                    <span className="w-3.5 h-3.5 border border-current border-t-transparent rounded-full animate-spin" />
+                  ) : "Book a free 15-min audit call"}
+                </button>
                 <Link href="/contact"
                   className="inline-flex items-center justify-center h-10 font-inter text-[10px]
                     tracking-[.14em] text-cream/35 uppercase hover:text-cream/60 transition-colors">

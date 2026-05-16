@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, cloneElement } from "react";
+import { useCalendly } from "@/hooks/useCalendly";
 
 const SERVICES = [
   "Brand Architecture",
@@ -21,6 +22,7 @@ type FormState = "idle" | "sending" | "success" | "error";
 export default function ContactContent() {
   const heroRef   = useRef<HTMLDivElement>(null);
   const formRef   = useRef<HTMLDivElement>(null);
+  const { open: openCalendly, loading: calendlyLoading } = useCalendly();
 
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [budget, setBudget]   = useState("");
@@ -123,10 +125,39 @@ export default function ContactContent() {
             {/* ── LEFT: info ─────────────────────────────────────── */}
             <div className="flex flex-col gap-10 pt-4">
 
+              {/* Book a call — Calendly */}
+              <div className="contact-info-el flex flex-col gap-4">
+                <span className="font-mono text-[9px] tracking-[.35em] text-cream/22 uppercase">
+                  Prefer to talk directly?
+                </span>
+                <button
+                  onClick={openCalendly}
+                  disabled={calendlyLoading}
+                  className="group relative inline-flex items-center gap-3 self-start
+                    font-cormorant font-medium text-[22px] md:text-[24px] text-cream/70
+                    hover:text-gold transition-colors duration-300 tracking-tight
+                    disabled:opacity-50 text-left"
+                >
+                  {calendlyLoading ? (
+                    <span className="w-4 h-4 border border-current border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                      className="shrink-0 text-gold/40 group-hover:text-gold transition-colors duration-300">
+                      <rect x="1" y="3" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.2"/>
+                      <path d="M1 7.5h16M6 1.5v3M12 1.5v3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                    </svg>
+                  )}
+                  Book a 30-min call
+                </button>
+                <span className="font-inter text-[11px] text-cream/28 -mt-1">
+                  Free discovery call · No obligation
+                </span>
+              </div>
+
               {/* direct contact */}
               <div className="contact-info-el flex flex-col gap-4">
                 <span className="font-mono text-[9px] tracking-[.35em] text-cream/22 uppercase">
-                  Or reach us directly
+                  Or email us directly
                 </span>
                 <a href="mailto:hello@ostoia.co"
                   className="font-cormorant font-medium text-[22px] md:text-[26px] text-cream/70
