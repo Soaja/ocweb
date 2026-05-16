@@ -214,7 +214,7 @@ function FounderSection() {
                     <span className="font-cormorant font-bold text-[32px]" style={goldGrad}>VO</span>
                   </div>
                   <div className="text-center">
-                    <p className="font-cormorant font-medium text-cream/80 text-[18px] leading-tight">Vojin Ostoja</p>
+                    <p className="font-cormorant font-medium text-cream/80 text-[18px] leading-tight">Vojin Ostojić</p>
                     <p className="font-mono text-[9px] tracking-[.32em] text-gold/45 uppercase mt-1">Founder &amp; Creative Director</p>
                   </div>
                 </div>
@@ -357,7 +357,7 @@ function PhilosophySection() {
         <div data-reveal className="flex items-center gap-4 mt-8 mb-16 md:mb-20">
           <div className="w-8 h-px bg-gold/30" />
           <span className="font-mono text-[9px] tracking-[.28em] text-cream/22 uppercase">
-            Vojin Ostoja · Founder
+            Vojin Ostojić · Founder
           </span>
         </div>
 
